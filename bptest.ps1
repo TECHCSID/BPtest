@@ -31,8 +31,6 @@ if (Test-Path $SpeedTestEXEPath -PathType leaf)
 }
 else
 {
-    Write-Host "SpeedTest EXE Doesn't Exist, starting file download"
-
     #downloads the file from the URL
     wget $DownloadURL -outfile $DOwnloadPath
 
