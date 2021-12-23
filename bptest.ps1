@@ -46,3 +46,5 @@ else
     Unzip $DOwnloadPath $ExtractToPath
     RunTest
 }
+#stop logging
+Stop-Transcript
