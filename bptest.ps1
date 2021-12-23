@@ -18,7 +18,7 @@ Start-Transcript -path $LogPath -Append:$false
 
 function RunTest()
 {
-    $test = & $SpeedTestEXEPath --accept-license
+    $test = & $SpeedTestEXEPath --accept-gdpr --accept-license
     $test
 }
 
@@ -58,7 +58,3 @@ else
 
 #get hostname
 $Hostname = hostname
-
-#stop logging
-Stop-Transcript
-exit 0
