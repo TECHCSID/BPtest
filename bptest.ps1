@@ -27,8 +27,7 @@ function RunTest()
 #check if file exists
 if (Test-Path $SpeedTestEXEPath -PathType leaf)
 {
-    Write-Host "SpeedTest EXE Exists, starting test" -ForegroundColor Green
-    RunTest
+        RunTest
 }
 else
 {
@@ -49,11 +48,3 @@ else
     Unzip $DOwnloadPath $ExtractToPath
     RunTest
 }
-
-
-$resultTmp = (Select-String -Path $env:C:\temp\SpeedTestLog.txt -Pattern Latency,Download,Upload) -replace '\s',''
-$resultLA = ($resultTmp -split ':')[4]
-$resultDN = ((($resultTmp -split ':')[9]) -split '\(')[0]
-$resultUP = ((($resultTmp -split ':')[15]) -split '\(')[0]
-
-write-output "Ping : $resultLA Down : $resultDN Up : $resultUP"
