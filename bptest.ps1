@@ -46,4 +46,9 @@ else
     Unzip $DOwnloadPath $ExtractToPath
     RunTest
 }
+$resultTmp = (Select-String -Path $env:c:\temp\BPTest\result.txt -Pattern Latency,Download,Upload) -replace '\s',''
+$resultLA = ($resultTmp -split ':')[4]
+$resultDN = ((($resultTmp -split ':')[9]) -split '\(')[0]
+$resultUP = ((($resultTmp -split ':')[15]) -split '\(')[0]
 
+write-output "Ping : $resultLA Down : $resultDN Up : $resultUP"
