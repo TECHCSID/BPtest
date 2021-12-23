@@ -1,25 +1,64 @@
-$rand = New-Object System.Random
-Start-Sleep $rand.next(10,120)
+#https://www.speedtest.net/apps/cli
+cls
 
-$url = "http://deploiement-rg.septeocloud.com/secib/speedtest.exe"
-$output = "$ C:\speedtest.exe"
-$outputzip = "$env:tmp\BPTest\"
-    
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Invoke-WebRequest -Uri $url -OutFile $output
+$DownloadURL = "https://install.speedtest.net/app/cli/ookla-speedtest-1.0.0-win64.zip"
+#location to save on the computer. Path must exist or it will error
+$DOwnloadPath = "c:\temp\SpeedTest.Zip"
+$ExtractToPath = "c:\temp\SpeedTest"
+$SpeedTestEXEPath = "C:\temp\SpeedTest\speedtest.exe"
+#Log File Path
+$LogPath = 'c:\temp\SpeedTestLog.txt'
 
-[System.Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem") | Out-Null
-[System.IO.Compression.ZipFile]::ExtractToDirectory($output, $outputzip)
+#Start Logging to a Text File
+$ErrorActionPreference="SilentlyContinue"
+Stop-Transcript | out-null
+$ErrorActionPreference = "Continue"
+Start-Transcript -path $LogPath -Append:$false
+#check for and delete existing log files
 
-Start-Process cmd -Verb RunAs -WindowStyle Hidden -ArgumentList "/c", "del c:\speedtest.exe /q"
+function RunTest()
+{
+    $test = & $SpeedTestEXEPath --accept-license
+    $test
+}
 
-.$env:tmp\BPTest\speedtest.exe --accept-license --accept-gdpr > $env:tmp\BPTest\result.txt
-
-$resultTmp = (Select-String -Path $env:tmp\BPTest\result.txt -Pattern Latency,Download,Upload) -replace '\s',''
+$resultTmp = (Select-String -Path $env:temp\SpeedTestLog.txt -Pattern Latency,Download,Upload) -replace '\s',''
 $resultLA = ($resultTmp -split ':')[4]
 $resultDN = ((($resultTmp -split ':')[9]) -split '\(')[0]
 $resultUP = ((($resultTmp -split ':')[15]) -split '\(')[0]
 
 write-output "Ping : $resultLA Down : $resultDN Up : $resultUP"
 
-Start-Process cmd -Verb RunAs -WindowStyle Hidden -ArgumentList "/c", "rd C:\Windows\Temp\BPTest\ /q /s"
+#check if file exists
+if (Test-Path $SpeedTestEXEPath -PathType leaf)
+{
+    Write-Host "SpeedTest EXE Exists, starting test" -ForegroundColor Green
+    RunTest
+}
+else
+{
+    Write-Host "SpeedTest EXE Doesn't Exist, starting file download"
+
+    #downloads the file from the URL
+    wget $DownloadURL -outfile $DOwnloadPath
+
+    #Unzip the file
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    function Unzip
+    {
+        param([string]$zipfile, [string]$outpath)
+
+        [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $outpath)
+    }
+
+    Unzip $DOwnloadPath $ExtractToPath
+    RunTest
+}
+
+
+#get hostname
+$Hostname = hostname
+
+#stop logging
+Stop-Transcript
+exit 0
