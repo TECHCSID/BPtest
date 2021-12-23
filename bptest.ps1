@@ -22,12 +22,7 @@ function RunTest()
     $test
 }
 
-$resultTmp = (Select-String -Path $env:temp\SpeedTestLog.txt -Pattern Latency,Download,Upload) -replace '\s',''
-$resultLA = ($resultTmp -split ':')[4]
-$resultDN = ((($resultTmp -split ':')[9]) -split '\(')[0]
-$resultUP = ((($resultTmp -split ':')[15]) -split '\(')[0]
 
-write-output "Ping : $resultLA Down : $resultDN Up : $resultUP"
 
 #check if file exists
 if (Test-Path $SpeedTestEXEPath -PathType leaf)
@@ -56,5 +51,9 @@ else
 }
 
 
-#get hostname
-$Hostname = hostname
+$resultTmp = (Select-String -Path $env:C:\temp\SpeedTestLog.txt -Pattern Latency,Download,Upload) -replace '\s',''
+$resultLA = ($resultTmp -split ':')[4]
+$resultDN = ((($resultTmp -split ':')[9]) -split '\(')[0]
+$resultUP = ((($resultTmp -split ':')[15]) -split '\(')[0]
+
+write-output "Ping : $resultLA Down : $resultDN Up : $resultUP"
