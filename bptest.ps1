@@ -13,7 +13,7 @@ $LogPath = 'c:\temp\SpeedTestLog.txt'
 $ErrorActionPreference="SilentlyContinue"
 Stop-Transcript | out-null
 $ErrorActionPreference = "Continue"
-Start-Transcript -path $LogPath -Append:$false
+
 #check for and delete existing log files
 
 function RunTest()
@@ -46,5 +46,4 @@ else
     Unzip $DOwnloadPath $ExtractToPath
     RunTest
 }
-#stop logging
-Stop-Transcript
+
