@@ -1,5 +1,3 @@
-{
-
 if (-not (test-path -path "C:\Windows\Temp\rgsupv\speedtest.exe")) {
 
 write-host "exist pas"
@@ -77,5 +75,3 @@ If (-not (Test-Path $registryPath)) {New-Item -Path HKlm:\Software\GENAPI -Name 
 
 New-ItemProperty -Path $registryPath -Name 'Débit' -Value $PourRG -PropertyType STRING -Force | Out-Null
 New-ItemProperty -Path $registryPath -Name 'FAI' -Value $resultISP -PropertyType STRING -Force | Out-Null
-
-}
