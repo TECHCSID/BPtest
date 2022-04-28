@@ -1,5 +1,3 @@
-If ($env:computername -like '*')
-
 {
 
 if (-not (test-path -path "C:\Windows\Temp\rgsupv\speedtest.exe")) {
