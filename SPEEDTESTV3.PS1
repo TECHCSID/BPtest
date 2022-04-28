@@ -48,7 +48,7 @@ $res2 = [math]::round($Xupload,2)
 
 
 
-$PourRG = "D$res1/U$res2 Mbps"
+$PourRG = "Down $res1 Mbps / Up $res2 Mbps"
 
 
 
