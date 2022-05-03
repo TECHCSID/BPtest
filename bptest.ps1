@@ -1,54 +1,48 @@
-#https://www.speedtest.net/apps/cli
-cls
+if (-not (test-path -path "C:\Windows\Temp\rgsupv\speedtest.exe")) {
 
-$DownloadURL = "https://install.speedtest.net/app/cli/ookla-speedtest-1.0.0-win64.zip"
-#location to save on the computer. Path must exist or it will error
-$DOwnloadPath = "c:\temp\SpeedTest.Zip"
-$ExtractToPath = "c:\temp\SpeedTest"
-$SpeedTestEXEPath = "C:\temp\SpeedTest\speedtest.exe"
-#Log File Path
-$LogPath = 'c:\temp\SpeedTestLog.txt'
+write-host "Speedtest non présent"
 
-#Start Logging to a Text File
-$ErrorActionPreference="SilentlyContinue"
-Stop-Transcript | out-null
-$ErrorActionPreference = "Continue"
-
-#check for and delete existing log files
-
-function RunTest()
-{
-    $test = & $SpeedTestEXEPath --accept-gdpr --accept-license
-    $test
+$url = "https://github.com/TECHCSID/BPtest/blob/main/speedtest.exe"
+$output = "C:\Windows\Temp\rgsupv\speedtest.exe"
 }
 
+$Speedtest = cmd /c "C:\Windows\Temp\rgsupv\speedtest.exe -f json --accept-gdpr --accept-license"
 
+$Download = $Speedtest.split(':')[9]
+$resultD = $Download.split(',')[0]
 
-#check if file exists
-if (Test-Path $SpeedTestEXEPath -PathType leaf)
-{
-        RunTest
-}
-else
-{
-    #downloads the file from the URL
-    wget $DownloadURL -outfile $DOwnloadPath
+$Upload = $Speedtest.split(':')[13]
+$resultU = $Upload.split(',')[0]
 
-    #Unzip the file
-    Add-Type -AssemblyName System.IO.Compression.FileSystem
-    function Unzip
-    {
-        param([string]$zipfile, [string]$outpath)
+$ResultUtemp = ($resultD / 1000000)
+$XDownload = $ResultUtemp * 8
+$res1 = [math]::round($XDownload,2)
 
-        [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $outpath)
-    }
+$ResultUtempB = ($resultU / 1000000)
+$Xupload = $ResultUtempB * 8
+$res2 = [math]::round($Xupload,2)
 
-    Unzip $DOwnloadPath $ExtractToPath
-    RunTest
-}
-$resultTmp = (Select-String -Path $env:c:\temp\SpeedTestLog.txt -Pattern Latency,Download,Upload) -replace '\s',''
-$resultLA = ($resultTmp -split ':')[4]
-$resultDN = ((($resultTmp -split ':')[9]) -split '\(')[0]
-$resultUP = ((($resultTmp -split ':')[15]) -split '\(')[0]
+$PourRG = "Download= $res1 Mbps / Upload= $res2 Mbps"
 
-write-output "Ping : $resultLA Down : $resultDN Up : $resultUP"
+$array = $speedtest -split "isp"
+$array2 = $array -split "interface"
+
+$trim = $array2[1]
+
+$words = $trim.Split(":")[1]
+$resultISP = $words.split(',')[0]
+
+$array3 = $speedtest -split "latency"
+$trim2 = $array3[1]
+$words2 = $trim2.Split(":")[1]
+$resultLA = $words2.split(',')[0]
+
+$registryPath = "HKLM:\Software\GENAPI\DebitInternet"
+$registryPath2 = "HKLM:\Software\GENAPI"
+
+If (-not (Test-Path $registryPath2)) {New-Item -Path HKLM:\Software -Name GENAPI –Force}
+If (-not (Test-Path $registryPath)) {New-Item -Path HKlm:\Software\GENAPI -Name DebitInternet –Force}
+
+New-ItemProperty -Path $registryPath -Name 'Débit' -Value $PourRG -PropertyType STRING -Force | Out-Null
+New-ItemProperty -Path $registryPath -Name 'FAI' -Value $resultISP -PropertyType STRING -Force | Out-Null
+write-output "$resultISP $PourRG Ping: $resultLAms"
