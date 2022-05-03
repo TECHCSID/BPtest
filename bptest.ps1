@@ -19,7 +19,7 @@ $ResultUtempB = ($resultU / 1000000)
 $Xupload = $ResultUtempB * 8
 $res2 = [math]::round($Xupload,2)
 
-$PourRG = "Download= $res1 Mbps / Upload= $res2 Mbps"
+$PourRG = "Download: $res1 Mb/s Upload: $res2 Mb/s"
 
 $array = $speedtest -split "isp"
 $array2 = $array -split "interface"
@@ -42,4 +42,4 @@ If (-not (Test-Path $registryPath)) {New-Item -Path HKlm:\Software\GENAPI -Name 
 
 New-ItemProperty -Path $registryPath -Name 'Débit' -Value $PourRG -PropertyType STRING -Force | Out-Null
 New-ItemProperty -Path $registryPath -Name 'FAI' -Value $resultISP -PropertyType STRING -Force | Out-Null
-write-output "$resultISP $PourRG Ping: $resultLAms"
+write-output "$resultISP $PourRG Ping: $resultLA ms"
