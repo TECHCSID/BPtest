@@ -30,7 +30,8 @@ $resultISP = $words.split(',')[0]
 $array3 = $speedtest -split "latency"
 $trim2 = $array3[1]
 $words2 = $trim2.Split(":")[1]
-$resultLA = $words2.split(',')[0]
+$resultLA = $words2.split('}')[0]
+$res3 = [math]::round($resultLA,2)
 
 $registryPath = "HKLM:\Software\SECIB\DebitInternet"
 $registryPath2 = "HKLM:\Software\SECIB"
@@ -40,4 +41,4 @@ If (-not (Test-Path $registryPath)) {New-Item -Path HKlm:\Software\SECIB -Name D
 
 New-ItemProperty -Path $registryPath -Name 'Débit' -Value $PourRG -PropertyType STRING -Force | Out-Null
 New-ItemProperty -Path $registryPath -Name 'FAI' -Value $resultISP -PropertyType STRING -Force | Out-Null
-write-output "$PourRG Ping: $resultLA ms Provider:$resultISP"
+write-output "$PourRG Ping: $res3 ms Provider:$resultISP"
