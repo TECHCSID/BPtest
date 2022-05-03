@@ -40,4 +40,4 @@ If (-not (Test-Path $registryPath)) {New-Item -Path HKlm:\Software\GENAPI -Name 
 
 New-ItemProperty -Path $registryPath -Name 'Débit' -Value $PourRG -PropertyType STRING -Force | Out-Null
 New-ItemProperty -Path $registryPath -Name 'FAI' -Value $resultISP -PropertyType STRING -Force | Out-Null
-write-output "Provider:$resultISP $PourRG Ping: $resultLA ms"
+write-output "$PourRG Ping: $resultLA ms Provider:$resultISP"
