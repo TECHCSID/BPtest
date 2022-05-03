@@ -22,7 +22,7 @@ $ResultUtempB = ($resultU / 1000000)
 $Xupload = $ResultUtempB * 8
 $res2 = [math]::round($Xupload,2)
 
-$PourRG = "Down $res1 Mbps / Up $res2 Mbps"
+$PourRG = "Download= $res1 Mbps / Upload= $res2 Mbps"
 
 $array = $speedtest -split "isp"
 $array2 = $array -split "interface"
@@ -32,15 +32,17 @@ $trim = $array2[1]
 $words = $trim.Split(":")[1]
 $resultISP = $words.split(',')[0]
 
+$array3 = $speedtest -split "latency"
+$trim2 = $array3[1]
+$words2 = $trim2.Split(":")[1]
+$resultLA = $words2.split(',')[0]
+
 $registryPath = "HKLM:\Software\SECIB\DebitInternet"
 $registryPath2 = "HKLM:\Software\SECIB"
-
-
 
 If (-not (Test-Path $registryPath2)) {New-Item -Path HKLM:\Software -Name SECIB –Force}
 If (-not (Test-Path $registryPath)) {New-Item -Path HKlm:\Software\SECIB -Name DebitInternet –Force}
 
-
 New-ItemProperty -Path $registryPath -Name 'Débit' -Value $PourRG -PropertyType STRING -Force | Out-Null
 New-ItemProperty -Path $registryPath -Name 'FAI' -Value $resultISP -PropertyType STRING -Force | Out-Null
-write-output "$resultISP $PourRG"
+write-output "$resultISP $PourRG Ping: $resultLAms"
