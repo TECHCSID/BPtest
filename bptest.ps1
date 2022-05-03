@@ -7,13 +7,10 @@ $output = "C:\Windows\Temp\rgsupv\speedtest.exe"
 }
 
 $Speedtest = cmd /c "C:\Windows\Temp\rgsupv\speedtest.exe -f json --accept-gdpr --accept-license"
-
 $Download = $Speedtest.split(':')[9]
 $resultD = $Download.split(',')[0]
-
 $Upload = $Speedtest.split(':')[13]
 $resultU = $Upload.split(',')[0]
-
 $ResultUtemp = ($resultD / 1000000)
 $XDownload = $ResultUtemp * 8
 $res1 = [math]::round($XDownload,2)
