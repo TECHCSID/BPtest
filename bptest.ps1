@@ -23,9 +23,7 @@ $PourRG = "Download: $res1 Mb/s Upload: $res2 Mb/s"
 
 $array = $speedtest -split "isp"
 $array2 = $array -split "interface"
-
 $trim = $array2[1]
-
 $words = $trim.Split(":")[1]
 $resultISP = $words.split(',')[0]
 
@@ -42,4 +40,4 @@ If (-not (Test-Path $registryPath)) {New-Item -Path HKlm:\Software\GENAPI -Name 
 
 New-ItemProperty -Path $registryPath -Name 'Débit' -Value $PourRG -PropertyType STRING -Force | Out-Null
 New-ItemProperty -Path $registryPath -Name 'FAI' -Value $resultISP -PropertyType STRING -Force | Out-Null
-write-output "$resultISP $PourRG Ping: $resultLA ms"
+write-output "Provider:$resultISP $PourRG Ping: $resultLA ms"
