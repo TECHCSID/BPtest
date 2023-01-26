@@ -16,7 +16,7 @@ $ResultUtempB = ($resultU / 1000000)
 $Xupload = $ResultUtempB * 8
 $res2 = [math]::round($Xupload,2)
 
-$PourRG = "Download: $res1 Mb/s Upload: $res2 Mb/s"
+$PourRG = "Download: $res1 Mb/s ;Upload: $res2 Mb/s"
 
 $array = $speedtest -split "isp"
 $array2 = $array -split "interface"
@@ -30,4 +30,4 @@ $words2 = $trim2.Split(":")[1]
 $resultLA = $words2.split('}')[0]
 $res3 = [math]::round($resultLA,2)
 
-write-output "$PourRG Ping: $res3 ms ISP:$resultISP"
+write-output "$PourRG ;Ping: $res3 ms ;ISP:$resultISP"
