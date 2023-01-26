@@ -1,4 +1,4 @@
-$url = "https://github.com/TECHCSID/BPtest/blob/main/speedtest.exe"
+$url = "https://github.com/TECHCSID/BPtest/raw/main/speedtest.exe"
 $output = "C:\Windows\Temp\rgsupv\speedtest.exe"
 }
 
