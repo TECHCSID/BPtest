@@ -1,7 +1,18 @@
-if (-not (test-path -path "C:\Windows\Temp\rgsupv\speedtest.exe")) 
+
+If ($env:computername -like '*')
+
 {
+
+if (-not (test-path -path "C:\Windows\Temp\rgsupv\speedtest.exe")) {
+
+write-host "non present"
+
 $url = "https://github.com/TECHCSID/BPtest/raw/main/speedtest.exe"
 $output = "C:\Windows\Temp\rgsupv\speedtest.exe"
+
+$cli = New-Object System.Net.WebClient;
+$cli.Headers['User-Agent'] = 'myUserAgentString';
+$cli.DownloadFile($url, $output)
 }
 $Speedtest = cmd /c "C:\Windows\Temp\rgsupv\speedtest.exe -f json --accept-gdpr --accept-license"
 $Download = $Speedtest.split(':')[9]
@@ -31,3 +42,4 @@ $resultLA = $words2.split('}')[0]
 $res3 = [math]::round($resultLA,2)
 
 write-output "$PourRG ;Ping: $res3 ms ;ISP:$resultISP"
+}
