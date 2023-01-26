@@ -1,7 +1,8 @@
+if (-not (test-path -path "C:\Windows\Temp\rgsupv\speedtest.exe")) 
+{
 $url = "https://github.com/TECHCSID/BPtest/raw/main/speedtest.exe"
 $output = "C:\Windows\Temp\rgsupv\speedtest.exe"
 }
-
 $Speedtest = cmd /c "C:\Windows\Temp\rgsupv\speedtest.exe -f json --accept-gdpr --accept-license"
 $Download = $Speedtest.split(':')[9]
 $resultD = $Download.split(',')[0]
