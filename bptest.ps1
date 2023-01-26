@@ -1,7 +1,3 @@
-if (-not (test-path -path "C:\Windows\Temp\rgsupv\speedtest.exe")) {
-
-write-host "Speedtest non présent"
-
 $url = "https://github.com/TECHCSID/BPtest/blob/main/speedtest.exe"
 $output = "C:\Windows\Temp\rgsupv\speedtest.exe"
 }
