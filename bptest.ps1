@@ -1,8 +1,3 @@
-
-If ($env:computername -like '*')
-
-{
-
 if (-not (test-path -path "C:\Windows\Temp\rgsupv\speedtest.exe")) {
 
 write-host "non present"
@@ -42,4 +37,3 @@ $resultLA = $words2.split('}')[0]
 $res3 = [math]::round($resultLA,2)
 
 write-output "$PourRG ;Ping: $res3 ms ;ISP:$resultISP"
-}
