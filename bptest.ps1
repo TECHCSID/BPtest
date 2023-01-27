@@ -2,16 +2,11 @@ if (-not (test-path -path "$Env:temp\speedtest.exe"))
 {
 write-host "non present"
 $sWebRequest = @{
-
     Uri = 'https://github.com/TECHCSID/BPtest/raw/main/speedtest.exe'
-
     OutFile = "$Env:temp\speedtest.exe"
-
 }
-
 Invoke-WebRequest @sWebRequest
 }
-
 $Speedtest = cmd /c "$Env:temp\speedtest.exe -f json --accept-gdpr --accept-license"
 $Download = $Speedtest.split(':')[11]
 $resultD = $Download.split(',')[0]
