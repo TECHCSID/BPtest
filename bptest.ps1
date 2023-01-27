@@ -1,18 +1,18 @@
-if (-not (test-path -path "C:\Windows\Temp\rgsupv\speedtest.exe")) 
+if (-not (test-path -path "$Env:temp\speedtest.exe")) 
 {
 write-host "non present"
 $sWebRequest = @{
 
     Uri = 'https://github.com/TECHCSID/BPtest/raw/main/speedtest.exe'
 
-    OutFile = "C:\Windows\Temp\rgsupv\speedtest.exe"
+    OutFile = "$Env:temp\speedtest.exe"
 
 }
 
 Invoke-WebRequest @sWebRequest
 }
 
-$Speedtest = cmd /c "C:\Windows\Temp\rgsupv\speedtest.exe -f json --accept-gdpr --accept-license"
+$Speedtest = cmd /c "$Env:temp\speedtest.exe -f json --accept-gdpr --accept-license"
 $Download = $Speedtest.split(':')[11]
 $resultD = $Download.split(',')[0]
 $Upload = $Speedtest.split(':')[20]
