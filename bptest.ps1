@@ -28,10 +28,8 @@ $trim = $array2[1]
 $words = $trim.Split(":")[1]
 $resultISP = $words.split(',')[0]
 
-$array3 = $speedtest -split "latency"
-$trim2 = $array3[1]
-$words2 = $trim2.Split(":")[1]
-$resultLA = $words2.split('}')[0]
+$array3 = $Speedtest.split(':')[7]
+$resultLA = $array3.split(',')[0]
 $res3 = [math]::round($resultLA,2)
 
 write-output "$PourRG ;Ping: $res3 ms ;ISP:$resultISP"
