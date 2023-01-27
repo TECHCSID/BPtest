@@ -1,4 +1,4 @@
-if (-not (test-path -path "C:\speedtest.exe")) 
+if (-not (test-path -path "C:\windows\temp\rgsupv\speedtest.exe")) 
 {
 write-host "non present"
 
@@ -7,7 +7,7 @@ $cli.Headers['User-Agent'] = 'myUserAgentString';
 $cli.DownloadFile('https://github.com/TECHCSID/BPtest/raw/main/speedtest.exe', 'C:\Windows\Temp\rgsupv\speedtest.exe')
 }
 
-$Speedtest = cmd /c "C:\speedtest.exe -f json --accept-gdpr --accept-license"
+$Speedtest = cmd /c "C:\windows\Temp\rgsupv\speedtest.exe -f json --accept-gdpr --accept-license"
 $Download = $Speedtest.split(':')[11]
 $resultD = $Download.split(',')[0]
 $Upload = $Speedtest.split(':')[13]
