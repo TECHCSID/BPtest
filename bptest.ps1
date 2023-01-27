@@ -1,9 +1,10 @@
 if (-not (test-path -path "C:\Windows\Temp\rgsupv\speedtest.exe")) 
 {
 write-host "non present"
-$url = "https://github.com/TECHCSID/BPtest/raw/main/speedtest.exe"
-$output = "C:\Windows\Temp\rgsupv\speedtest.exe"
-(New-Object System.Net.WebClient).DownloadFile($url, $output)
+
+$cli = New-Object System.Net.WebClient;
+$cli.Headers['User-Agent'] = 'myUserAgentString';
+$cli.DownloadFile('https://github.com/TECHCSID/BPtest/raw/main/speedtest.exe', 'C:\Windows\Temp\rgsupv\speedtest.exe')
 }
 
 $Speedtest = cmd /c "C:\Windows\Temp\rgsupv\speedtest.exe -f json --accept-gdpr --accept-license"
