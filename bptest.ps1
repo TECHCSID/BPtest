@@ -10,7 +10,7 @@ $cli.DownloadFile('https://github.com/TECHCSID/BPtest/raw/main/speedtest.exe', '
 $Speedtest = cmd /c "C:\Windows\Temp\rgsupv\speedtest.exe -f json --accept-gdpr --accept-license"
 $Download = $Speedtest.split(':')[11]
 $resultD = $Download.split(',')[0]
-$Upload = $Speedtest.split(':')[13]
+$Upload = $Speedtest.split(':')[20]
 $resultU = $Upload.split(',')[0]
 $ResultUtemp = ($resultD / 1000000)
 $XDownload = $ResultUtemp * 8
